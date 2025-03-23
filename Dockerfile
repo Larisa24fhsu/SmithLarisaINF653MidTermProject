@@ -20,7 +20,7 @@ COPY . /var/www/html
 
 # If you have specific PHP extensions required, you can install them here.
 # For example, if you need MySQL support:
-# RUN docker-php-ext-install pdo_mysql 
+RUN docker-php-ext-install pdo_mysql 
 
 # Adding Postgres support:
 RUN docker-php-ext-install pdo_pgsql
@@ -29,11 +29,11 @@ RUN docker-php-ext-install pdo_pgsql
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable Apache modules
-RUN a2enmod rewrite
+RUN a2enmod rewrite && service apache2 restart
 
 # Suprisingly, I deployed to Render without this!
 # Set Apache to bind to IP address 0.0.0.0
- RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
+# RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Optionally, you can set environment variables here if needed
 # ENV VARIABLE_NAME=value
@@ -42,4 +42,4 @@ RUN a2enmod rewrite
 EXPOSE 80
 
 # By default, Apache is started automatically. You can change or customize the startup command if necessary.
-# CMD ["apache2-foreground"]
+CMD ["apachectl", "-D", "FOREGROUND"]
