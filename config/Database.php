@@ -18,12 +18,16 @@
             if($this->conn){
                 return $this->conn;
             } else {
-                $dsn = "pgsql:host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DBNAME') . ";sslmode=require";
+
+                $dsn = "pgsql:host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DBNAME') . ";sslmode=prefer";
         
                 try{
                     // Connect to PostgreSQL
                     $this->conn = new PDO($dsn, getenv('USERNAME'), getenv('PASSWORD'));
                     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    return $this->conn; //ensure connection
+
                 }catch(PDOException $e){
                     die('Connection Error: ' . $e->getMessage()); // Show actual connection error
                 }
