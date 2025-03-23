@@ -9,18 +9,23 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory in the container
 WORKDIR /var/www/html
 
+# Create logs directory and set proper permissions
+RUN mkdir -p /var/log/apache2 && \
+    chown -R www-data:www-data /var/log/apache2
+
 # Copy project files into container
 COPY . /var/www/html/
 
 # Adding Postgres support:
 RUN docker-php-ext-install pdo_pgsql
 
+# Copy apache config file
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-#Enable Apache modules
+# Enable Apache modules
 RUN a2enmod rewrite
 
-#set apache to bind (render only not local)
+# Set Apache to bind to 0.0.0.0 (for render only, not local)
 RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Expose port 80
