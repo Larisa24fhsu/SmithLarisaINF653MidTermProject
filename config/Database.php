@@ -18,17 +18,15 @@
             if($this->conn){
                 return $this->conn;
             } else {
-                $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->db_name}";
-            
-            try{
-                //Connect to MySQL
-                $this->conn = new PDO($dsn, $this->username, $this->password);
-                
-                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            }catch(PDOException $e){
-                echo 'Connection Error: '.$e->getMessage();
+                $dsn = "pgsql:host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DBNAME') . ";sslmode=require";
+        
+                try{
+                    // Connect to PostgreSQL
+                    $this->conn = new PDO($dsn, getenv('USERNAME'), getenv('PASSWORD'));
+                    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                }catch(PDOException $e){
+                    die('Connection Error: ' . $e->getMessage()); // Show actual connection error
+                }
             }
-         }
         }
     }
