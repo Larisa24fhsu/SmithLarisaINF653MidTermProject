@@ -1,37 +1,34 @@
 # Use an official PHP runtime as a parent image
 FROM php:8.2-apache
 
-# Install required system packages and dependencies for PostgreSQL
+# Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Install PostgreSQL support for PHP
+RUN docker-php-ext-install pdo_pgsql
+
+# Enable Apache modules
+RUN a2enmod rewrite
 
 # Set the working directory in the container
 WORKDIR /var/www/html
 
 # Copy the current directory contents into the container at /var/www/html
-COPY . /var/www/html
+COPY . /var/www/html/
 
-# Install PHP extensions for PostgreSQL support
-RUN docker-php-ext-install pdo_pgsql
-
-# Set the ServerName to avoid Apache warnings
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-# Fix file permissions for Apache
-RUN chown -R www-data:www-data /var/www/html
-
-# Copy custom Apache configuration
+# Copy custom Apache configuration (if you have one)
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Enable Apache modules and restart Apache
-RUN a2enmod rewrite
+# Make sure Apache is set to listen on 0.0.0.0 for external access
+RUN echo "Listen 0.0.0.0:82" >> /etc/apache2/apache2.conf
 
-# Set Apache to bind to all IP addresses (required for containerized environments)
-RUN echo "Listen 0.0.0.0:81" >> /etc/apache2/apache2.conf
+# Set ServerName to avoid Apache startup warnings
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port 80 to allow incoming connections to the container
-EXPOSE 81
+EXPOSE 82
 
-# Default command to run Apache in the foreground
+# By default, Apache is started automatically. You can change or customize the startup command if necessary.
 CMD ["apachectl", "-D", "FOREGROUND"]
