@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/html
 
 # Copy project files into container
-COPY public /var/www/html/
+COPY . /var/www/html/
 
 # Adding Postgres support:
 RUN docker-php-ext-install pdo_pgsql
