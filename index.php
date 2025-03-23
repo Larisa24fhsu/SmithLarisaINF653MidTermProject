@@ -13,22 +13,22 @@ if($method === 'OPTIONS') {
 switch ($method) {
     case 'GET':
         if(isset($_GET['id'])){
-            include_once 'read_single.php'; // fetch single
+            include_once 'src/read_single.php'; // fetch single
         } else {
-            include_once 'read.php'; //fetch all
+            include_once 'src/read.php'; //fetch all
         }
         break;
 
     case 'POST':
-        include_once 'create.php'; // Create a new category
+        include_once 'src/create.php'; // Create a new category
         break;
     
     case 'PUT':
-            include_once 'update.php'; // Update a category
+            include_once 'src/update.php'; // Update a category
             break;
     
         case 'DELETE':
-            include_once 'delete.php'; // Delete a category
+            include_once 'src/delete.php'; // Delete a category
             break;
     
         default:
