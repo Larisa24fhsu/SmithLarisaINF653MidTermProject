@@ -22,13 +22,13 @@ COPY . /var/www/html/
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Make sure Apache is set to listen on 0.0.0.0 for external access
-RUN echo "Listen 0.0.0.0:82" >> /etc/apache2/apache2.conf
+RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Set ServerName to avoid Apache startup warnings
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port 80 to allow incoming connections to the container
-EXPOSE 82
+EXPOSE 80
 
 # By default, Apache is started automatically. You can change or customize the startup command if necessary.
 CMD ["apachectl", "-D", "FOREGROUND"]
