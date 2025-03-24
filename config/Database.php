@@ -12,14 +12,13 @@
             $this->password = getenv('PASSWORD');
             $this->dbname = getenv('DBNAME');
             $this->host = getenv('HOST');
-            $this->port = getenv('PORT');
         }
         public function connect(){ 
             if($this->conn){
                 return $this->conn;
             } else {
 
-                $dsn = "pgsql:host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DBNAME') . ";sslmode=prefer";
+                $dsn = "pgsql:host=" . getenv('HOST') . ";dbname=" . getenv('DBNAME') . ";sslmode=prefer";
         
                 try{
                     // Connect to PostgreSQL
