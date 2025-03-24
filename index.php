@@ -1,11 +1,11 @@
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
-<?php
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
+// Get the HTTP method and request URI
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
@@ -21,12 +21,6 @@ $parsedUrl = parse_url($uri);
 $path = trim($parsedUrl['path'], '/');
 $segments = explode('/', $path);
 
-// Ensure it's an API request
-if ($segments[0] !== 'api') {
-    http_response_code(404);
-    echo json_encode(["error" => "Invalid API route"]);
-    exit();
-}
 
 // Determine the entity (quotes, authors, categories)
 $resource = $segments[1] ?? null;
@@ -57,14 +51,15 @@ switch ($resource) {
  */
 function handleRequest($resource, $method, $id)
 {
+    // Set the resource directory for quotes, authors, and categories
     $resourceDir = "api/$resource";
 
     switch ($method) {
         case 'GET':
             if ($id) {
-                include_once "$resourceDir/read_single.php"; // Fetch single item
+                include_once "$resourceDir/read_single.php"; // Fetch single item (by ID)
             } else {
-                include_once "$resourceDir/read.php"; // Fetch all
+                include_once "$resourceDir/read.php"; // Fetch all items
             }
             break;
 
@@ -74,7 +69,7 @@ function handleRequest($resource, $method, $id)
 
         case 'PUT':
             if ($id) {
-                include_once "$resourceDir/update.php"; // Update specific entry
+                include_once "$resourceDir/update.php"; // Update specific entry (by ID)
             } else {
                 http_response_code(400);
                 echo json_encode(["error" => "Missing ID for update"]);
@@ -83,7 +78,7 @@ function handleRequest($resource, $method, $id)
 
         case 'DELETE':
             if ($id) {
-                include_once "$resourceDir/delete.php"; // Delete specific entry
+                include_once "$resourceDir/delete.php"; // Delete specific entry (by ID)
             } else {
                 http_response_code(400);
                 echo json_encode(["error" => "Missing ID for deletion"]);
