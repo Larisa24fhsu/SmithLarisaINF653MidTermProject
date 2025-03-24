@@ -33,11 +33,11 @@ $quote->category_id = $data->category_id;
 //Create post
 if($quote->create()){
     echo json_encode(
-        array('message' => 'Quote Added')
+        array('message' => 'Quote Updated')
     );
 } else {
     echo json_encode(
-        array('message' => 'Quote Not Added')
+        array('message' => 'Quote Not Updated')
     );
 }
 
