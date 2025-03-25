@@ -1,12 +1,10 @@
 RewriteEngine On
 
-# Redirect lowercase API calls to the correct case automatically
-RewriteCond %{REQUEST_URI} ^/api/ [NC]
-RewriteRule ^api/(.*)$ API/Quotes/$1 [R=301,L]
+# Force lowercase API calls to match the correct case (API/Quotes instead of api/quotes)
+RewriteCond %{REQUEST_URI} ^/api/(.*)$ [NC]
+RewriteRule ^api/(.*)$ /API/$1 [R=301,L]
 
-# Ensure Apache processes requests correctly
-<IfModule mod_rewrite.c>
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^API/([^/]*)/?$ API/Quotes/$1 [NC,L]
-</IfModule>
+# Ensure proper routing for API requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^API/([^/]*)/?$ API/Quotes/$1 [NC,L]
