@@ -1,14 +1,10 @@
 RewriteEngine On
 
-# Redirect /api/quotes to /API/quotes (force lowercase)
+# Redirect /api/* to /API/* (force lowercase)
 RewriteCond %{REQUEST_URI} ^/api/(.*)$ [NC]
 RewriteRule ^api/(.*)$ /API/$1 [R=301,L]
 
-# Redirect /api/Quotes to /API/Quotes (ensure case-sensitive routing)
-RewriteCond %{REQUEST_URI} ^/api/Quotes/(.*)$ [NC]
-RewriteRule ^api/Quotes/(.*)$ /API/Quotes/$1 [R=301,L]
-
-# Ensure proper routing for API requests
+# Ensure proper routing for API requests that aren't files or directories
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^API/([^/]*)/?$ API/Quotes/$1 [NC,L]
