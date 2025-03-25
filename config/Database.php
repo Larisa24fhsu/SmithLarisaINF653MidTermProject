@@ -1,7 +1,6 @@
 <?php
     class Database {
         private $host;
-        private $port;
         private $db_name;
         private $username;
         private $password;
