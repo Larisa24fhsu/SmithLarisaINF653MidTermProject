@@ -49,11 +49,18 @@ if (strpos($uri, '/API/quotes') !== false) {
     // Example: get quotes, create quotes, etc.
     if ($method === 'GET') {
         // Fetch quotes logic
-        include_once 'quotes/read.php';
+        include_once 'Quotes/read.php';
     } elseif ($method === 'POST') {
         // Create new quote logic
-        include_once 'quotes/create.php';
-    }
+        include_once 'Quotes/create.php';
+    } elseif ($method === 'PUT') {
+            // Create new quote logic
+            include_once 'Quotes/update.php';
+        } elseif ($method === 'DELETE') {
+            // Create new quote logic
+            include_once 'Quotes/delete.php';
+        }
+
 } else {
     // Default response for unrecognized routes
     echo json_encode(['message' => 'Route not found.']);
