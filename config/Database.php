@@ -18,7 +18,7 @@
             } else {
 
                 //$dsn = "pgsql:host=" . getenv('HOST') . ";dbname=" . getenv('DBNAME') . ";sslmode=prefer";
-                $dsn = "pgsql:host={$this->host}; dbname={$this->db_name};sslmode=prefe";
+                $dsn = "pgsql:host={$this->host}; dbname={$this->db_name}; sslmode=prefer";
         
                 try{
                     // Connect to PostgreSQL
