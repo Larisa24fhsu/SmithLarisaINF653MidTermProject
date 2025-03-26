@@ -1,7 +1,5 @@
 <?php
 
-include_once __DIR__ . '../config/Database.php';
-
 class Author{
     private $conn;
     private $table = 'authors';
