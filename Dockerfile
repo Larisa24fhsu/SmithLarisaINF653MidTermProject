@@ -28,7 +28,7 @@ RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port 80 to allow incoming connections to the container
-EXPOSE 5432
+EXPOSE 80
 
 # By default, Apache is started automatically. You can change or customize the startup command if necessary.
 CMD ["apachectl", "-D", "FOREGROUND"]
