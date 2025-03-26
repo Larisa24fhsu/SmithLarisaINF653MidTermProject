@@ -1,4 +1,7 @@
 <?php
+
+include_once __DIR__ . '../../config/Database.php';
+
 class Quote{
     private $conn;
     private $table = 'quotes';

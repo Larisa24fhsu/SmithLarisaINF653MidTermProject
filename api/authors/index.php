@@ -27,11 +27,11 @@ switch ($method) {
             include_once 'update.php'; // Update a category
             break;
     
-        case 'DELETE':
+    case 'DELETE':
             include_once 'delete.php'; // Delete a category
             break;
     
-        default:
+    default:
             echo json_encode(['message' => 'Method Not Allowed']);
             break;
     }
