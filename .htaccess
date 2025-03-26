@@ -1,0 +1,5 @@
+SetEnv USERNAME "quotesdb_larisa_smith"
+SetEnv PASSWORD "iIei8kWSS34LlLtCVXFn49YpqNk2mV2S" 
+SetEnv DBNAME "quotesdb_290i" 
+SetEnv HOST "dpg-cvfdu3dsvqrc73d0ekgg-a.virginia-postgres.render.com"
+SetEnv PORT "5432"
