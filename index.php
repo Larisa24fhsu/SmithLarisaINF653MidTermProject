@@ -1,11 +1,21 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
 
-declare(strict_types = 1);
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm Example</title>
+    <style>
+    body {
+        background-color: #333;
+        color: whitesmoke;
+    }
+    </style>
+</head>
 
-echo '<pre>';
-print_r(getenv('SITE_URL'));
-echo '<br>';
-print_r($_SERVER);
-echo '</pre>';
+<body>
+    <h1>Midterm Example REST API</h1>
+</body>
 
-phpinfo();
+</html>
