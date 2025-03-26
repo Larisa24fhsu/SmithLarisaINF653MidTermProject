@@ -9,7 +9,7 @@
         public function __construct() {
             $this->username = getenv('USERNAME');
             $this->password = getenv('PASSWORD');
-            $this->dbname = getenv('DBNAME');
+            $this->db_name = getenv('DBNAME');
             $this->host = getenv('HOST');
         }
         public function connect(){ 
@@ -18,11 +18,11 @@
             } else {
 
                 //$dsn = "pgsql:host=" . getenv('HOST') . ";dbname=" . getenv('DBNAME') . ";sslmode=prefer";
-                $dsn = "pgsql:host={$this->host}; dbname={$this->db_name}; sslmode=prefer";
+                $dsn = "pgsql:host={$this->host}; dbname={$this->db_name}; sslmode=require";
         
                 try{
                     // Connect to PostgreSQL
-                    $this->conn = new PDO($dsn, getenv('USERNAME'), getenv('PASSWORD'));
+                    $this->conn = new PDO($dsn,$this->username, $this->password);
                     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     return $this->conn; //ensure connection
