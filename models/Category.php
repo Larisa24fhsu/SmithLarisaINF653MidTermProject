@@ -95,25 +95,26 @@ class Category{
         //Prepare statement
         $stmt = $this->conn->prepare($query);
 
-            // Bind ID
-    $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        // Clean data
+        $this->category = htmlspecialchars(strip_tags($this->category));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
-    // Execute the query
-    $stmt->execute();
+        // Bind Data
+        $stmt->bindParam(':category', $this->category);
+        $stmt->bindParam(':id', $this->id);
 
-    // Fetch result
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Execute query
+        if ($stmt->execute()) {
+            return [
+                'id' => $this->id,
+                'category' => $this->category
+            ];
+        }
 
-    // Check if category exists
-    if ($row) {
-        // If found, set the class properties
-        $this->id = $row['id'];
-        $this->category = $row['category'];
-        return true; // Return true if category is found
-    }
-     return false;
-    }
-
+        // Print error if something goes wrong
+        printf("Error: %s.\n", $stmt->error);
+        return false;
+        }
      //Delete category
      public function delete() {
         //Create query

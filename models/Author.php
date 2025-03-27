@@ -126,26 +126,19 @@ class Author{
         //Bind data
         $stmt->bindParam(':id', $this->id);
 
-        //Execute query
-        if($stmt->execute()){
-            return true;
-        }
+         // Execute query
+        if ($stmt->execute()) {
+        return [
+            'id' => $this->id,
+            'author' => $this->author
+        ];
+    }
 
         //Print error if something goes wrong
         printf("Error: %s.\n", $stmt->error);
 
      return false;
    
-    }
-
-       // Check if author exists
-       public function checkAuthorExists($author_id) {
-        $query = "SELECT id FROM " . $this->table . " WHERE id = :author_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->rowCount() > 0;
     }
 
 }
