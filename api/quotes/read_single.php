@@ -23,22 +23,30 @@ $quote = new Quote($db);
 
 
 
-// Validate input parameters
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    echo json_encode(['message' => 'Missing Required Parameters']);
-    exit();
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $quote->id = intval($_GET['id']);
 }
 
-$quote->id = intval($_GET['id']);
+if (isset($_GET['author']) && !empty($_GET['author'])) {
+    $quote->author_id = intval($_GET['author']);
+}
 
-// Get single quote
+if (isset($_GET['category']) && !empty($_GET['category'])) {
+    $quote->category_id = intval($_GET['category']);
+}
+
+
+// Get quotes
 $result = $quote->read_single();
 
 // Check if any quotes exist
-$result = $quote->read_single();
+if (empty($result)) {
+    echo json_encode(['message' => 'No Quotes Found']);
+    exit();
+}
 
-if ($result) {
-    echo json_encode($result, JSON_PRETTY_PRINT);
+if (count($result) === 1) {
+    echo json_encode($result[0], JSON_PRETTY_PRINT);
 } else {
     echo json_encode(['message' => 'No Quotes Found']);
 }
