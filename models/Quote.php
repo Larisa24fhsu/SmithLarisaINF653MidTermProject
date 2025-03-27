@@ -126,12 +126,11 @@ class Quote{
     //add quotes
     public function update() {
         //create query
-        $query = 'UPDATE ' . $this->table . '
-        SET quote = :quote, 
-            author_id = :author_id, 
-            category_id = :category_id 
-        WHERE id = :id';
-
+       $query = 'UPDATE ' . $this->table . '
+          SET quote = :quote, 
+              author_id = :author_id, 
+              category_id = :category_id 
+          WHERE id = :id';
         
         //Prepare statement
         $stmt = $this->conn->prepare($query);
@@ -148,17 +147,10 @@ class Quote{
         $stmt->bindParam(':category_id', $this->category_id);
         $stmt->bindParam(':id', $this->id);
 
-        // Execute query
-    if($stmt->execute()){
-        // Return updated quote data
-        return [
-            'id' => $this->id,
-            'quote' => $this->quote,
-            'author_id' => $this->author_id,
-            'category_id' => $this->category_id
-        ];
-    }
-
+        //Execute query
+        if($stmt->execute()){
+            return true;
+        }
 
         //Print error if something goes wrong
         printf("Error: %s.\n", $stmt->error);
