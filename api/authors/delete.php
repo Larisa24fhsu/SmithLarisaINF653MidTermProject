@@ -24,14 +24,16 @@ $data = json_decode(file_get_contents("php://input"));
 
 $author->id = $data->id;
 
-if($author->create()){
-    echo json_encode(
-        array('message'=>'Author Deleted')
-    );
+// Attempt to delete the author
+if ($author->delete()) {
+    echo json_encode([
+        'id' => $author->id,  // Return the id of the deleted author
+        'message' => 'Author Deleted'
+    ]);
 } else {
-    echo json_encode(
-        array('message'=> 'Author Not Deleted')
-    );
+    echo json_encode([
+        'message' => 'Author Not Deleted'
+    ]);
 }
 
 //all functions tested and functioning
