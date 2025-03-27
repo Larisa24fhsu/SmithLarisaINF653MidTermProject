@@ -32,7 +32,6 @@ if($num>0){
     $categories_arr['data']=array();
 
     while($row=$result->fetch(PDO::FETCH_ASSOC)){
-        print_r($row);
         extract($row);
 
         $category_item = array(
@@ -40,7 +39,7 @@ if($num>0){
             'category'=>$category
         );
         //Push to "data"
-        array_push($categories_arr['data'], $category_item);
+        array_push($categories_arr, $category_item);
  
     }
     //Turn to JSON & output

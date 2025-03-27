@@ -21,20 +21,22 @@ $db = $database->connect();
 //Instantiate category object
 $category = new Category($db);
 
-//Get ID
-$category->id = isset($_GET['id']) ? $_GET['id'] : die();
+// Get category
+$category->id = isset($_GET['id']) ? $_GET['id'] : die(json_encode(['message' => 'category_id Not Found']));
 
-//Get category
-$category->read_single();
+// Fetch category data
+if($category->read_single()) {
+    // Create array
+    $category_arr = array (
+        'id' => $category->id,
+        'category' => $category->category
+    );
 
-//create array
-$category_arr = [
-    'id' => $category->id,
-    'category' => $category->category
-];
-
-//Make JSON
-print_r(json_encode($category_arr));
-
+    // Make JSON
+    echo json_encode($category_arr);
+} else {
+    // If category does not exist, return a JSON response
+    echo json_encode(['message' => 'category_id Not Found']);
+}
 
 // all functions tested and working

@@ -30,7 +30,6 @@ if($num>0){
     $authors_arr = array();
 
     while($row=$result->fetch(PDO::FETCH_ASSOC)){
-        print_r($row);
         extract($row);
 
         $author_item = array(

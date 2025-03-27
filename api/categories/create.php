@@ -22,17 +22,19 @@ $category = new Category($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$category->category = $data->category;
 
-//Create post
-if($category->create()){
-    echo json_encode(
-        array('message' => 'Category Added')
-    );
+if (!isset($data->category)) {
+    echo json_encode(['message' => 'Missing Required Parameters']);
+    exit();
+}
+
+$category->category = $data->category;
+$result = $category->create();
+
+if ($result) {
+    echo json_encode($result);
 } else {
-    echo json_encode(
-        array('message' => 'Category Not Added')
-    );
+    echo json_encode(['message' => 'Category Not Added']);
 }
 
 //all tested and functioning

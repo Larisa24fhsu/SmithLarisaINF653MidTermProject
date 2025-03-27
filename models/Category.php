@@ -39,7 +39,7 @@ class Category{
         $stmt = $this->conn->prepare($query);
 
         //Bind ID
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
         //execute the query
         $stmt->execute();
@@ -50,7 +50,7 @@ class Category{
             $this->id = $row['id'];
             $this->category = $row['category'];
         }else {
-            echo json_encode(['message' => 'No authors found']); // Return error message if no author exists
+            echo json_encode(['message' => 'No Authors found']); // Return error message if no author exists
         }
     }
 
@@ -71,8 +71,9 @@ class Category{
         $stmt->bindParam(':category', $this->category);
        
         //Execute query
-        if($stmt->execute()){
-            return true;
+        if ($stmt->execute()) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row; // Return inserted record
         }
 
         //Print error if something goes wrong

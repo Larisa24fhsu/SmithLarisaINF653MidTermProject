@@ -30,32 +30,24 @@ class Author{
 
     //get single author
     public function read_single(){
-        $query = "SELECT
-                    id,
-                    author
-                FROM
-                    authors
-                WHERE id = :id LIMIT 1";
-
-         //prepared statement
+        $query = "SELECT id, author FROM authors WHERE id = :id LIMIT 1";
+    
         $stmt = $this->conn->prepare($query);
-
-        //Bind ID
-        $stmt->bindParam(1, $this->id);
-
-        //execute the query
+        $stmt->bindParam(':id', $this->id);
         $stmt->execute();
-
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
         if ($row) {
             $this->id = $row['id'];
             $this->author = $row['author'];
         } else {
-            echo json_encode(['message' => 'No authors found']); // Return error message if no author exists
+            // Return JSON directly instead of just echoing inside this function
+            echo json_encode(['message' => 'author_id Not Found']);
+            exit();  // Stop further execution to prevent invalid JSON output
         }
     }
-
+    
     //add author
     public function create() {
         //create query
