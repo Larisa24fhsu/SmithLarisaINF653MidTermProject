@@ -30,12 +30,11 @@ if ($category->id === null) {
     exit();
 }
 
-
 // Fetch single category
 $result = $category->read_single();
 
-// Check if category data was returned
-if ($result) {
+// Fetch single category
+if ($category->read_single()) {
     // If category exists, return data
     $category_arr = [
         'id' => $category->id,

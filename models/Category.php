@@ -46,14 +46,16 @@ class Category{
 
         $row=$stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($row){
+        if ($row) {
+            // Populate the object properties
             $this->id = $row['id'];
             $this->category = $row['category'];
-        }else {
-            echo json_encode(['message' => 'No Authors found']); // Return error message if no author exists
+            return true; // Return true when category is found
+        } else {
+            return false; // Return false if category not found
         }
     }
-
+    
      //add category
      public function create() {
         //create query
