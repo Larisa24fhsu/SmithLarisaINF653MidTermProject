@@ -93,22 +93,22 @@ class Category{
         //Prepare statement
         $stmt = $this->conn->prepare($query);
 
-        //Clean data
-        $this->category = htmlspecialchars(strip_tags($this->category));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+            // Bind ID
+    $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
-        //Bind Data
-        $stmt->bindParam(':category', $this->category);
-        $stmt->bindParam(':id', $this->id);
-       
-        //Execute query
-        if($stmt->execute()){
-            return true;
-        }
+    // Execute the query
+    $stmt->execute();
 
-        //Print error if something goes wrong
-        printf("Error: %s.\n", $stmt->error);
+    // Fetch result
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Check if category exists
+    if ($row) {
+        // If found, set the class properties
+        $this->id = $row['id'];
+        $this->category = $row['category'];
+        return true; // Return true if category is found
+    }
      return false;
     }
 
