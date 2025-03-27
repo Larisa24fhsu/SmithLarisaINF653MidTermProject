@@ -29,12 +29,16 @@ if (!isset($data->category)) {
 }
 
 $category->category = $data->category;
-$result = $category->create();
 
-if ($result) {
-    echo json_encode($result);
+// Create the category
+if ($category->create()) {
+    // Return the created category data with ID
+    echo json_encode([
+        'id' => $category->id,
+        'category' => $category->category
+    ]);
 } else {
+    // If creation fails
     echo json_encode(['message' => 'Category Not Added']);
 }
-
 //all tested and functioning

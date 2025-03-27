@@ -21,19 +21,27 @@ $db = $database->connect();
 //Instantiate author object
 $author = new Author($db);
 
-// Get author
-$author->id = isset($_GET['id']) ? $_GET['id'] : die();
+// Validate and set ID
+if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo json_encode(['message' => 'author_id Not Found']);
+    exit();
+}
+
+$author->id = intval($_GET['id']);
 
 //Get author
 $author->read_single();
 
 //create array
 if (!empty($author->author)) {
-    $author_arr = array(
+    $author_arr = [
         'id' => $author->id,
         'author' => $author->author
-    );
+    ];
     echo json_encode($author_arr);
+} else {
+    // If not found, return JSON response
+    echo json_encode(['message' => 'author_id Not Found']);
 }
 
 // all functions tested and working

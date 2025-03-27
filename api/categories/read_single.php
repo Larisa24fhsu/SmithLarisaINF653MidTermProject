@@ -32,8 +32,14 @@ $category->id = intval($_GET['id']);
 // Fetch single category
 $result = $category->read_single();
 
-if ($result) {
-    echo json_encode($result, JSON_PRETTY_PRINT);
+// If category exists, return data
+if (!empty($category->category)) {
+    $category_arr = [
+        'id' => $category->id,
+        'category' => $category->category
+    ];
+    echo json_encode($category_arr);
 } else {
+    // If category is not found, return an error message
     echo json_encode(['message' => 'category_id Not Found']);
 }
