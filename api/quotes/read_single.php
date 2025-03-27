@@ -45,7 +45,11 @@ if (empty($result)) {
     exit();
 }
 
-// Return JSON response
-echo json_encode($result, JSON_PRETTY_PRINT);
+if (count($result) === 1) {
+    echo json_encode($result[0], JSON_PRETTY_PRINT);
+} else {
+    echo json_encode(['message' => 'No Quotes Found']);
+}
+
 
 // all functions tested and working

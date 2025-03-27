@@ -126,14 +126,12 @@ class Quote{
     //add quotes
     public function update() {
         //create query
-        $query = 'INSERT INTO ' . 
-                $this->table . '
-            SET
-                quote = :quote, 
-                author_id = :author_id, 
-                category_id = :category_id 
-            WHERE
-                id = :id';
+        $query = 'UPDATE ' . $this->table . '
+        SET quote = :quote, 
+            author_id = :author_id, 
+            category_id = :category_id 
+        WHERE id = :id';
+
         
         //Prepare statement
         $stmt = $this->conn->prepare($query);

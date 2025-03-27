@@ -33,23 +33,18 @@ $num = $result->rowCount();
 //Check if any quotes
 if($num>0){
     $quotes_arr = array();
-    $quotes_arr['data']=array();
 
-    while($row=$result->fetch(PDO::FETCH_ASSOC)){
-        extract($row);
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    extract($row);
+    $quotes_arr[] = array(
+        'id' => $id,
+        'quote' => $quote,
+        'author' => $author,
+        'category' => $category
+    );
+}
+echo json_encode($quotes_arr);
 
-        $quote_item = array(
-            'id'=>$id,
-            'quote'=>$quote,
-            'author'=>$author,
-            'category'=>$category
-        );
-        //Push to "data"
-        array_push($quotes_arr['data'], $quote_item);
- 
-    }
-    //Turn to JSON & output
-    echo json_encode($quotes_arr);
 } else {
     //No posts
     echo json_encode(
