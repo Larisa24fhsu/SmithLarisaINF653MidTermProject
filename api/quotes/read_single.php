@@ -41,7 +41,7 @@ $result = $quote->read_single();
 
 // Check if any quotes exist
 if (empty($result)) {
-    echo json_encode(['message' => 'No quotes found.']);
+    echo json_encode(['message' => 'No Quotes found.']);
     exit();
 }
 
