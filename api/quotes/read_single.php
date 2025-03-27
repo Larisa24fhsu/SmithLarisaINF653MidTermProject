@@ -51,5 +51,4 @@ if (count($result) === 1) {
     echo json_encode(['message' => 'No Quotes Found']);
 }
 
-
 // all functions tested and working
