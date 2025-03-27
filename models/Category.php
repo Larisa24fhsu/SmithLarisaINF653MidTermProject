@@ -70,14 +70,12 @@ class Category{
         //Bind Data
         $stmt->bindParam(':category', $this->category);
        
-        //Execute query
-        if ($stmt->execute()) {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $row; // Return inserted record
-        }
-
-        //Print error if something goes wrong
-        printf("Error: %s.\n", $stmt->error);
+        // Execute the query and check if successful
+         if ($stmt->execute()) {
+        // Get the last inserted ID to return
+        $this->id = $this->conn->lastInsertId();
+        return true;
+    }
 
      return false;
     }

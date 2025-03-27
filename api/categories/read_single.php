@@ -21,19 +21,22 @@ $db = $database->connect();
 //Instantiate category object
 $category = new Category($db);
 
-// Validate and set ID
-if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
+// Get category id from URL parameter
+$category->id = isset($_GET['id']) ? $_GET['id'] : null;
+
+// Check if the category id is provided
+if ($category->id === null) {
     echo json_encode(['message' => 'category_id Not Found']);
     exit();
 }
 
-$category->id = intval($_GET['id']);
 
 // Fetch single category
 $result = $category->read_single();
 
-// If category exists, return data
-if (!empty($category->category)) {
+// Check if category data was returned
+if ($result) {
+    // If category exists, return data
     $category_arr = [
         'id' => $category->id,
         'category' => $category->category
