@@ -12,6 +12,8 @@ if($method === 'OPTIONS') {
 
 include_once '../../config/Database.php';
 include_once '../../models/Quote.php';
+include_once '../../models/Author.php';  
+include_once '../../models/Category.php';
 
 //Instantiate DB & connect
 $database = new Database();
@@ -22,6 +24,29 @@ $quote = new Quote($db);
 
 //Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
+
+// Check if required parameters are missing
+if (!isset($data->quote) || !isset($data->author_id) || !isset($data->category_id)) {
+    echo json_encode(['message' => 'Missing Required Parameters']);
+    http_response_code(400); // Return 400 Bad Request
+    exit();
+}
+
+// Check if author exists
+$author = new Author($db);
+if (!$author->checkAuthorExists($data->author_id)) {
+    echo json_encode(['message' => 'author_id Not Found']);
+    http_response_code(404); // Return 404 Not Found
+    exit();
+}
+
+// Check if category exists
+$category = new Category($db);
+if (!$category->checkCategoryExists($data->category_id)) {
+    echo json_encode(['message' => 'category_id Not Found']);
+    http_response_code(404); // Return 404 Not Found
+    exit();
+}
 
 $quote->quote = $data->quote;
 $quote->author_id = $data->author_id;

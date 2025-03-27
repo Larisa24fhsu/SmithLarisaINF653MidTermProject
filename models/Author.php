@@ -138,4 +138,14 @@ class Author{
    
     }
 
+       // Check if author exists
+       public function checkAuthorExists($author_id) {
+        $query = "SELECT id FROM " . $this->table . " WHERE id = :author_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
 }
