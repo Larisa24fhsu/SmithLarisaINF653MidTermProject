@@ -30,7 +30,7 @@ if($author->create()){
     );
 } else {
     echo json_encode(
-        array('message'=> 'Author Deleted')
+        array('message'=> 'Author Not Deleted')
     );
 }
 

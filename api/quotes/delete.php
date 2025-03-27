@@ -27,13 +27,14 @@ $quote->id = $data->id;
 
 //Create post
 if($quote->delete()){
-    echo json_encode(
-        array('message' => 'Quote Deleted')
-    );
+    echo json_encode([
+        'id' => $quote->id,
+        'message' => 'Quote Deleted'
+    ]);
 } else {
-    echo json_encode(
-        array('message' => 'Quote Not Deleted')
-    );
+    echo json_encode([
+        'message' => 'Quote Not Deleted'
+    ]);
 }
 
 //all functions tested and functioning

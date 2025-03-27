@@ -28,15 +28,16 @@ if (!isset($data->id) || empty($data->id)) {
 
 $category->id = $data->id;
 
-//Create post
-if($category->delete()){
-    echo json_encode(
-        array('message' => 'Category Deleted')
-    );
+//Delete category
+if ($category->delete()) {
+    echo json_encode([
+        'id' => $category->id,  // Include the id of the deleted category
+        'message' => 'Category Deleted'
+    ]);
 } else {
-    echo json_encode(
-        array('message' => 'Category Not Deleted')
-    );
+    echo json_encode([
+        'message' => 'Category Not Deleted'
+    ]);
 }
 
 //all tested and functioning
