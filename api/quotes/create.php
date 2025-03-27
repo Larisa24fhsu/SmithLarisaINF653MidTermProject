@@ -25,6 +25,12 @@ $quote = new Quote($db);
 //Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
+// Check if required parameters are missing
+if (!isset($data->quote) || !isset($data->author_id) || !isset($data->category_id)) {
+    echo json_encode(['message' => 'Missing Required Parameters']);
+    exit();
+}
+
 $quote->quote = $data->quote;
 $quote->author_id = $data->author_id;
 $quote->category_id = $data->category_id;
