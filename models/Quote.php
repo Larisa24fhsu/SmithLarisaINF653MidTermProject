@@ -82,18 +82,13 @@ class Quote{
             $stmt->bindParam(':category_id', $this->category_id);
         }
         
-         // If no results, return the respective error message
-        if (empty($results)) {
-        if (!empty($this->author_id)) {
-            return ['message' => 'author_id Not Found'];
-        }
-        if (!empty($this->category_id)) {
-            return ['message' => 'category_id Not Found'];
-        }
-        return ['message' => 'No Quotes Found'];
-    }
+        //execute the query
+        $stmt->execute();
 
-    return $results;
+        // Fetch results
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results ?: [];
         }
 
      //add quotes
